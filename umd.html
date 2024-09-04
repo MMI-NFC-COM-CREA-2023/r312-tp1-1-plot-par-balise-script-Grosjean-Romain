@@ -1,11 +1,65 @@
 <!DOCTYPE html>
-<div id="myplot"></div>
-<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-<script src="https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6"></script>
-<script type="module">
+<html lang="fr">
 
-    const plot = Plot.rectY({ length: 10000 }, Plot.binX({ y: "count" }, { x: Math.random })).plot();
-    const div = document.querySelector("#myplot");
-    div.append(plot);
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graphiques des Nationalités et Pingouins</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6"></script>
+</head>
 
-</script>
+<body>
+    <div id="myplot1"></div>
+    <div id="myplot2"></div>
+
+    <script type="module">
+        fetch('data.json')
+            .then(response => response.json())
+            .then(data => {
+                const chart1 = Plot.plot({
+                    marginLeft: 115,
+                    title: '"TOP 10" des nationalités',
+                    subtitle: "Parmi les plus représentées des tournois du Grand Chelem (vainqueurs uniquement)",
+                    x: { grid: true, label: "Nb de victoires" },
+                    y: { label: "Nationalité des vainqueurs" },
+                    marks: [
+                        Plot.barX(
+                            data,
+                            Plot.groupY(
+                                { x: "count" },
+                                { y: "WINNER_NATIONALITY", fill: "#1eb8d0", tip: true, sort: { y: "x", reverse: true, limit: 10 } }
+                            )
+                        ),
+                        Plot.ruleX([0])
+                    ]
+                });
+
+                document.getElementById('myplot1').appendChild(chart1);
+            })
+            .catch(error => console.error('Erreur lors du chargement des données:', error));
+
+        fetch('penguins.json')
+            .then(response => response.json())
+            .then(penguins => {
+                const chart2 = Plot.plot({
+                    x: { label: "Liste des îles" },
+                    y: { grid: true, label: "Nb de pingouins" },
+                    title: "Liste des îles des Pingouins",
+                    marks: [
+                        Plot.frame({ strokeOpacity: 0.1 }),
+                        Plot.barY(
+                            penguins,
+                            Plot.groupX({ y: "count" }, { fx: "sex", x: "island", fill: "#ff8c38", tip: true })
+                        ),
+                        Plot.ruleY([0])
+                    ]
+                });
+
+                document.getElementById('myplot2').appendChild(chart2);
+            })
+            .catch(error => console.error('Erreur lors du chargement des données:', error));
+    </script>
+</body>
+
+</html>
