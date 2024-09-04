@@ -1,4 +1,47 @@
 <!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test ESM</title>
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+    }
+
+    nav {
+        background-color: #333;
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+    nav a {
+        color: white;
+        text-decoration: none;
+        margin: 0 15px;
+        font-weight: bold;
+    }
+
+    nav a:hover {
+        text-decoration: underline;
+    }
+</style>
+</head>
+
+<body>
+    <div>
+        <nav>
+            <a href="umd.html">Page UMD</a>
+            <a href="esm.html">Page ESM</a>
+        </nav>
+        <h1>Bienvenue sur la page ESM, celle-ci n'est qu'en phase de test pour "essai"</h1>
+        <p>Utilisez le menu ci-dessus pour naviguer vers les autres pages.</p>
+    </div>
+
 <div id="myplot"></div>
 <script type="module">
 
@@ -9,3 +52,4 @@
     div.append(plot);
 
 </script>
+</html>
